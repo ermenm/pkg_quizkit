@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<extension type="package" version="1.6" method="upgrade">
+  <name>QuizKit Package Installer</name>
+  <author>Michelle Ermen</author>
+  <creationDate>April 2023</creationDate>
+  <packagename>QuizKit</packagename>
+  <version>1.0.0</version>
+  <description>QuizKit package</description>
+  <scriptfile>script.install.php</scriptfile>
+  <files folder="packages">
+    <file type="module" id="mod_quizmaker" client="site">mod_quizmaker.zip</file>
+    <file type="module" id="mod_quizdashboard" client="administrator">mod_quizdashboard.zip</file>
+  </files>
+  <config></config>
+</extension>

@@ -1,0 +1,119 @@
+<?php
+
+/**
+ * @package     QuizKit
+ * @version     1.0.0
+ * @author      Michelle Ermen
+ * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
+ * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
+ */
+
+defined('_JEXEC') or die;
+
+use Joomla\CMS\Factory;
+use Joomla\CMS\Error\Error;
+
+/**
+ * Installer script
+ * 
+ * Creates a new table on install
+ * 
+ * Updates table on install
+ * 
+ */
+
+class pkg_QuizKitInstallerScript
+{
+  /**
+   * Method to install the extension
+   *
+   * @return void
+   */
+  function install($parent)
+  {
+    $db = Factory::getDBO();
+    $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			email varchar(50) NOT NULL,
+			params varchar(255) NOT NULL,
+			visitor_id int(11) NOT NULL,
+			score float NOT NULL,
+			submission_time datetime NOT NULL,
+			PRIMARY KEY (id)
+		)";
+
+    $db->setQuery($query);
+    $result = $db->query();
+
+    if (!$result) {
+      Error::raiseWarning(500, $db->stderr());
+      return false;
+    }
+    echo '<p>The module has been installed.</p>';
+  }
+
+  /**
+   * Method to uninstall the extension
+   * $parent is the class calling this method
+   *
+   * @return void
+   */
+  function uninstall($parent)
+  {
+    echo '<p>The module has been uninstalled.</p>';
+  }
+
+  /**
+   * Method to update the extension
+   * $parent is the class calling this method
+   *
+   * @return void
+   */
+  function update($parent)
+  {
+    $db = Factory::getDBO();
+
+    // Create a new database table
+    $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
+			id int(11) NOT NULL AUTO_INCREMENT,
+			email varchar(50) NOT NULL,
+			params varchar(255) NOT NULL,
+			visitor_id int(11) NOT NULL,
+			score float NOT NULL,
+			submission_time datetime NOT NULL,
+			PRIMARY KEY (id)
+		)";
+
+    $db->setQuery($query);
+    $result = $db->query();
+
+    if (!$result) {
+      Error::raiseWarning(500, $db->stderr());
+      return false;
+    }
+
+    echo '<p>The module has been updated to version ' . $parent->get('manifest')->version . '.</p>';
+  }
+
+  /**
+   * Method to run before an install/update/uninstall method
+   * $parent is the class calling this method
+   * $type is the type of change (install, update or discover_install)
+   *
+   * @return void
+   */
+  function preflight($type, $parent)
+  {
+  }
+
+  /**
+   * Method to run after an install/update/uninstall method
+   * $parent is the class calling this method
+   * $type is the type of change (install, update or discover_install)
+   *
+   * @return void
+   */
+  function postflight($type, $parent)
+  {
+  }
+}
