@@ -1,5 +1,8 @@
 # Change log
 
+## v1.0.2
+- (mod_quizmaker/mod_quizmaker.css): object-fit to cover with fixed 350 height for desktop and small screens and score display width + height increased
+
 ## v1.0.1
 
 - (mod_quizmaker/mod_quizmaker.xml): change max questions from 10 to 100
