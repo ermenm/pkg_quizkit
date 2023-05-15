@@ -1,5 +1,8 @@
 # Change log
 
+## v1.0.3
+- (mod_quizmaker/quizmaker.js): change button[type="submit"] to specific selector for submit button to prevent bleeding
+
 ## v1.0.2
 - (mod_quizmaker/mod_quizmaker.css): object-fit to cover with fixed 350 height for desktop and small screens and score display width + height increased
 
