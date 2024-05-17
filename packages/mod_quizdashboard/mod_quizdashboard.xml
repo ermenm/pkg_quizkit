@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="3.9" type="module" client="administrator" method="upgrade">
+<extension version="4.0" type="module" client="administrator" method="upgrade">
   <name>QuizDashboard</name>
   <creationDate>April 2023</creationDate>
   <author>Michelle Ermen</author>
