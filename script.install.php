@@ -35,15 +35,15 @@ class pkg_QuizKitInstallerScript
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			email varchar(50) NOT NULL,
-			params varchar(255) NOT NULL,
-			visitor_id int(11) NOT NULL,
+			params TEXT NOT NULL,
+			visitor_id int(11) NOT NULL DEFAULT 0,
 			score float NOT NULL,
 			submission_time datetime NOT NULL,
 			PRIMARY KEY (id)
 		)";
 
     $db->setQuery($query);
-    $result = $db->query();
+    $result = $db->execute();
 
     if (!$result) {
       Error::raiseWarning(500, $db->stderr());
@@ -73,19 +73,36 @@ class pkg_QuizKitInstallerScript
   {
     $db = Factory::getDBO();
 
-    // Create a new database table
+    // Check if 'params' column is not already TEXT and modify it if necessary
+    $query = $db->getQuery(true)
+      ->select('COLUMN_TYPE')
+      ->from('INFORMATION_SCHEMA.COLUMNS')
+      ->where('TABLE_SCHEMA = DATABASE()')
+      ->where('TABLE_NAME = ' . $db->quote($db->getPrefix() . 'quizkit_submissions'))
+      ->where('COLUMN_NAME = ' . $db->quote('params'));
+
+    $db->setQuery($query);
+    $columnType = $db->loadResult();
+
+    if ($columnType !== 'text') {
+      $query = 'ALTER TABLE ' . $db->quoteName('#__quizkit_submissions') . ' MODIFY COLUMN ' . $db->quoteName('params') . ' TEXT';
+      $db->setQuery($query);
+      $db->execute();
+    }
+
+    // Create the table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			email varchar(50) NOT NULL,
-			params varchar(255) NOT NULL,
-			visitor_id int(11) NOT NULL,
+			params TEXT NOT NULL,
+			visitor_id int(11) NOT NULL DEFAULT 0,
 			score float NOT NULL,
 			submission_time datetime NOT NULL,
 			PRIMARY KEY (id)
 		)";
 
     $db->setQuery($query);
-    $result = $db->query();
+    $result = $db->execute();
 
     if (!$result) {
       Error::raiseWarning(500, $db->stderr());
