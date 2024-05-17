@@ -1,5 +1,8 @@
 # Change log
 
+## v1.1.0
+- Overall Joomla 5 compatibility
+
 ## v1.0.3
 - (mod_quizmaker/quizmaker.js): change button[type="submit"] to specific selector for submit button to prevent bleeding
 

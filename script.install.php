@@ -2,7 +2,7 @@
 
 /**
  * @package     QuizKit
- * @version     1.0.0
+ * @version     1.1.0
  * @author      Michelle Ermen
  * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
@@ -11,7 +11,7 @@
 defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
-use Joomla\CMS\Error\Error;
+use Joomla\CMS\Installer\InstallerScript;
 
 /**
  * Installer script
@@ -21,8 +21,7 @@ use Joomla\CMS\Error\Error;
  * Updates table on install
  * 
  */
-
-class pkg_QuizKitInstallerScript
+class pkg_QuizKitInstallerScript extends InstallerScript
 {
   /**
    * Method to install the extension
@@ -33,20 +32,19 @@ class pkg_QuizKitInstallerScript
   {
     $db = Factory::getDBO();
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			email varchar(50) NOT NULL,
-			params varchar(255) NOT NULL,
-			visitor_id int(11) NOT NULL,
-			score float NOT NULL,
-			submission_time datetime NOT NULL,
-			PRIMARY KEY (id)
-		)";
+      id int(11) NOT NULL AUTO_INCREMENT,
+      email varchar(50) NOT NULL,
+      params varchar(255) NOT NULL,
+      score float NOT NULL,
+      submission_time datetime NOT NULL,
+      PRIMARY KEY (id)
+    )";
 
     $db->setQuery($query);
     $result = $db->execute();
 
     if (!$result) {
-      Error::raiseWarning(500, $db->stderr());
+      Factory::getApplication()->enqueueMessage($db->stderr(), 'error');
       return false;
     }
     echo '<p>The module has been installed.</p>';
@@ -60,7 +58,42 @@ class pkg_QuizKitInstallerScript
    */
   function uninstall($parent)
   {
-    echo '<p>The module has been uninstalled.</p>';
+    $db = Factory::getDBO();
+
+    // Verwijder de tabel
+    $query = "DROP TABLE IF EXISTS #__quizkit_submissions";
+    $db->setQuery($query);
+    $result = $db->execute();
+
+    if (!$result) {
+      Factory::getApplication()->enqueueMessage($db->stderr(), 'error');
+      return false;
+    }
+
+    // Verwijder de bestanden van de module
+    jimport('joomla.filesystem.folder');
+    jimport('joomla.filesystem.file');
+
+    $modulePaths = [
+      JPATH_SITE . '/modules/mod_quizmaker',
+      JPATH_ADMINISTRATOR . '/modules/mod_quizdashboard'
+    ];
+
+    foreach ($modulePaths as $path) {
+      if (JFolder::exists($path)) {
+        JFolder::delete($path);
+      }
+    }
+
+    // Verwijder de vermeldingen uit de `extensions` tabel
+    $query = $db->getQuery(true)
+      ->delete($db->quoteName('#__extensions'))
+      ->where($db->quoteName('element') . ' = ' . $db->quote('mod_quizmaker'))
+      ->orWhere($db->quoteName('element') . ' = ' . $db->quote('mod_quizdashboard'));
+    $db->setQuery($query);
+    $db->execute();
+
+    echo '<p>The module has been uninstalled and the table has been removed.</p>';
   }
 
   /**
@@ -73,26 +106,42 @@ class pkg_QuizKitInstallerScript
   {
     $db = Factory::getDBO();
 
-    // Create a new database table
+    // Check if 'params' column is not already TEXT and modify it if necessary
+    $query = $db->getQuery(true)
+      ->select('COLUMN_TYPE')
+      ->from('INFORMATION_SCHEMA.COLUMNS')
+      ->where('TABLE_SCHEMA = DATABASE()')
+      ->where('TABLE_NAME = ' . $db->quote($db->getPrefix() . 'quizkit_submissions'))
+      ->where('COLUMN_NAME = ' . $db->quote('params'));
+
+    $db->setQuery($query);
+    $columnType = $db->loadResult();
+
+    if ($columnType !== 'text') {
+      $query = 'ALTER TABLE ' . $db->quoteName('#__quizkit_submissions') . ' MODIFY COLUMN ' . $db->quoteName('params') . ' TEXT';
+      $db->setQuery($query);
+      $db->execute();
+    }
+
+    // Create the table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			email varchar(50) NOT NULL,
-			params varchar(255) NOT NULL,
-			visitor_id int(11) NOT NULL,
-			score float NOT NULL,
-			submission_time datetime NOT NULL,
-			PRIMARY KEY (id)
-		)";
+            id int(11) NOT NULL AUTO_INCREMENT,
+            email varchar(50) NOT NULL,
+            params TEXT NOT NULL,
+            score float NOT NULL,
+            submission_time datetime NOT NULL,
+            PRIMARY KEY (id)
+        )";
 
     $db->setQuery($query);
     $result = $db->execute();
 
     if (!$result) {
-      Error::raiseWarning(500, $db->stderr());
+      Factory::getApplication()->enqueueMessage($db->stderr(), 'error');
       return false;
     }
 
-    echo '<p>The module has been updated to version ' . $parent->get('manifest')->version . '.</p>';
+    echo '<p>The module has been updated to version ' . $parent->getManifest()->version . '.</p>';
   }
 
   /**
