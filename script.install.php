@@ -12,7 +12,6 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Error\Error;
-use Joomla\CMS\Installer\Installer;
 
 /**
  * Installer script
