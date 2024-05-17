@@ -12,6 +12,7 @@ defined('_JEXEC') or die;
 
 use Joomla\CMS\Factory;
 use Joomla\CMS\Error\Error;
+use Joomla\CMS\Installer\Installer;
 
 /**
  * Installer script
@@ -33,20 +34,21 @@ class pkg_QuizKitInstallerScript
   {
     $db = Factory::getDBO();
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			email varchar(50) NOT NULL,
-			params TEXT NOT NULL,
-			visitor_id int(11) NOT NULL DEFAULT 0,
-			score float NOT NULL,
-			submission_time datetime NOT NULL,
-			PRIMARY KEY (id)
-		)";
+      id int(11) NOT NULL AUTO_INCREMENT,
+      email varchar(50) NOT NULL,
+      params TEXT NOT NULL,
+      visitor_id int(11) NOT NULL DEFAULT 0,
+      score float NOT NULL,
+      submission_time datetime NOT NULL,
+      PRIMARY KEY (id)
+    )";
 
     $db->setQuery($query);
-    $result = $db->execute();
-
-    if (!$result) {
-      Error::raiseWarning(500, $db->stderr());
+    try {
+      $db->execute();
+      echo '<p>The module has been installed.</p>';
+    } catch (Exception $e) {
+      Error::raiseWarning(500, $e->getMessage());
       return false;
     }
     echo '<p>The module has been installed.</p>';
@@ -60,7 +62,15 @@ class pkg_QuizKitInstallerScript
    */
   function uninstall($parent)
   {
-    echo '<p>The module has been uninstalled.</p>';
+    $db = Factory::getDBO();
+
+    try {
+      $db->execute();
+      echo '<p>The module has been uninstalled and the table has been removed.</p>';
+    } catch (Exception $e) {
+      Error::raiseWarning(500, $e->getMessage());
+      return false;
+    }
   }
 
   /**
@@ -92,24 +102,28 @@ class pkg_QuizKitInstallerScript
 
     // Create the table if it does not exist
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
-			id int(11) NOT NULL AUTO_INCREMENT,
-			email varchar(50) NOT NULL,
-			params TEXT NOT NULL,
-			visitor_id int(11) NOT NULL DEFAULT 0,
-			score float NOT NULL,
-			submission_time datetime NOT NULL,
-			PRIMARY KEY (id)
-		)";
+      id int(11) NOT NULL AUTO_INCREMENT,
+      email varchar(50) NOT NULL,
+      params TEXT NOT NULL,
+      visitor_id int(11) NOT NULL DEFAULT 0,
+      score float NOT NULL,
+      submission_time datetime NOT NULL,
+      PRIMARY KEY (id)
+    )";
 
     $db->setQuery($query);
-    $result = $db->execute();
+    try {
+      $db->execute();
 
-    if (!$result) {
-      Error::raiseWarning(500, $db->stderr());
+      // Load the manifest file to get the version
+      $manifest = $parent->getParent()->manifest;
+      $version = (string) $manifest->version;
+
+      echo '<p>The module has been updated to version ' . $version . '.</p>';
+    } catch (Exception $e) {
+      Error::raiseWarning(500, $e->getMessage());
       return false;
     }
-
-    echo '<p>The module has been updated to version ' . $parent->get('manifest')->version . '.</p>';
   }
 
   /**
