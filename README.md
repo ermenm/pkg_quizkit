@@ -1,4 +1,4 @@
-# QuizKit
+# QuizKit v1.1.0
 
 QuizKit is a quiz extension designed specifically for Joomla. It allows you to easily create quizzes with questions, answers, and explanations, and add images to each question. You can see your score in real-time and even submit your email address to subscribe to a newsletter.
 
