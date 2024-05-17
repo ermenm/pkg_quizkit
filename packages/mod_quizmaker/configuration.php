@@ -3,7 +3,7 @@
 /**
  * @package     QuizKit
  * @subpackage  mod_quizmaker
- * @version     1.0.0
+ * @version     1.1.0
  * @author      Michelle Ermen
  * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
@@ -35,4 +35,3 @@ $config = array(
     'verify_html' => true,
   )
 );
-?>

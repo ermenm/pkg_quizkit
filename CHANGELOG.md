@@ -1,5 +1,9 @@
 # Change log
 
+## v1.1.0 
+- Update column 'params' from varchar to type 'text'
+- replace 'query' function to 'execute' function
+
 ## v1.0.3
 - (mod_quizmaker/quizmaker.js): change button[type="submit"] to specific selector for submit button to prevent bleeding
 
