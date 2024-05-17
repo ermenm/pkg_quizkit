@@ -43,7 +43,7 @@ class pkg_QuizKitInstallerScript
 		)";
 
     $db->setQuery($query);
-    $result = $db->query();
+    $result = $db->execute();
 
     if (!$result) {
       Error::raiseWarning(500, $db->stderr());
@@ -85,7 +85,7 @@ class pkg_QuizKitInstallerScript
 		)";
 
     $db->setQuery($query);
-    $result = $db->query();
+    $result = $db->execute();
 
     if (!$result) {
       Error::raiseWarning(500, $db->stderr());
