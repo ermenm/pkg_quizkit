@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="4.0" client="site" method="upgrade">
+<extension type="module" client="site" method="upgrade">
   <name>QuizMaker</name>
   <author>Michelle Ermen</author>
   <creationDate>March 2023</creationDate>
   <copyright>Copyright © 2023 MSE Digital. All Rights Reserved</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
   <authorEmail>michelleermen.digital@gmail.com</authorEmail>
-  <version>1.1.0</version>
-  <description>In de QuizMaker worden de vragen en antwoorden toegevoegd.</description>
+  <version>1.1.1</version>
+  <description>In de QuizMaker worden de vragen en antwoorden toegevoegd. </description>
   <files>
     <filename module="mod_quizmaker">mod_quizmaker.php</filename>
     <filename>mod_quizmaker.xml</filename>
@@ -25,87 +25,97 @@
   <config>
     <fields name="params">
       <fieldset name="basic">
-        <field
-          name="start_title"
-          type="textarea"
-          label="MOD_QUIZMAKER_START_TITLE_LABEL"
-        />
-        <field
-          name="start_subtitle"
-          type="textarea"
-          label="MOD_QUIZMAKER_START_SUBTITLE_LABEL"
-        />
-        <field
-          name="spinner_image"
-          type="media"
-          label="MOD_QUIZMAKER_LOADING_SPINNER_IMAGE"
-          description="MOD_QUIZMAKER_LOADING_SPINNER_IMAGE_DESC"
-          accept="image/jpeg, image/png"
-        />
-        <field
-          name="start_image"
-          type="media"
-          label="MOD_QUIZMAKER_START_IMAGE"
-          description="MOD_QUIZMAKER_START_IMAGE_DESC"
-          accept="image/jpeg, image/png"
-        />
-        <field
-          name="start_image_alt"
-          type="textarea"
-          label="MOD_QUIZMAKER_START_IMAGE_ALT"
-          description="MOD_QUIZMAKER_IMAGE_ALT_DESCRIPTION"
-        />
-        <field
-          name="low_score_title"
-          type="textarea"
-          label="MOD_QUIZMAKER_LOW_SCORE_TITLE"
-        />
-        <field
-          name="low_score_subtitle"
-          type="editor"
-          filter="raw"
-          label="MOD_QUIZMAKER_LOW_SCORE_SUBTITLE"
-        />
-        <field
-          name="mid_score_title"
-          type="textarea"
-          label="MOD_QUIZMAKER_MID_SCORE_TITLE"
-        />
-        <field
-          name="mid_score_subtitle"
-          type="editor"
-          filter="raw"
-          label="MOD_QUIZMAKER_MID_SCORE_SUBTITLE"
-        />
-        <field
-          name="high_score_title"
-          type="textarea"
-          label="MOD_QUIZMAKER_HIGH_SCORE_TITLE"
-        />
-        <field
-          name="high_score_subtitle"
-          type="editor"
-          filter="raw"
-          label="MOD_QUIZMAKER_HIGH_SCORE_SUBTITLE"
-        />
-        <field
-          name="excellent_score_title"
-          type="textarea"
-          label="MOD_QUIZMAKER_EXCELLENT_SCORE_TITLE"
-        />
-        <field
-          name="excellent_score_subtitle"
-          type="editor"
-          filter="raw"
-          label="MOD_QUIZMAKER_EXCELLENT_SCORE_SUBTITLE"
-        />
-        <field
-          name="user_agreement_text"
-          type="textarea"
-          required="true"
-          label="MOD_QUIZMAKER_USER_AGREEMENT_LABEL"
-          description="MOD_QUIZMAKER_USER_AGREEMENT_DESC"
-        />
+        <form>
+          <field
+            name="start_title"
+            type="textarea"
+            label="MOD_QUIZMAKER_START_TITLE_LABEL"
+          />
+          <field
+            name="start_subtitle"
+            type="textarea"
+            label="MOD_QUIZMAKER_START_SUBTITLE_LABEL"
+          />
+          <field
+            name="spinner_image"
+            type="media"
+            label="MOD_QUIZMAKER_LOADING_SPINNER_IMAGE"
+            description="MOD_QUIZMAKER_LOADING_SPINNER_IMAGE_DESC"
+            accept="image/jpeg, image/png"
+          >
+          </field>
+          <form>
+            <field
+              name="start_image"
+              type="media"
+              label="MOD_QUIZMAKER_START_IMAGE"
+              description="MOD_QUIZMAKER_START_IMAGE_DESC"
+              accept="image/jpeg, image/png"
+            />
+            <field
+              name="start_image_alt"
+              type="textarea"
+              label="MOD_QUIZMAKER_START_IMAGE_ALT"
+              description="MOD_QUIZMAKER_IMAGE_ALT_DESCRIPTION"
+            />
+          </form>
+        </form>
+        <form>
+          <field
+            name="low_score_title"
+            type="textarea"
+            label="MOD_QUIZMAKER_LOW_SCORE_TITLE">
+          </field>
+          <field
+            name="low_score_subtitle"
+            type="editor"
+            filter="raw"
+            label="MOD_QUIZMAKER_LOW_SCORE_SUBTITLE">
+          </field>
+          <field
+            name="mid_score_title"
+            type="textarea"
+            label="MOD_QUIZMAKER_MID_SCORE_TITLE">
+          </field>
+          <field
+            name="mid_score_subtitle"
+            type="editor"
+            filter="raw"
+            label="MOD_QUIZMAKER_MID_SCORE_SUBTITLE"
+          >
+          </field>
+          <field
+            name="high_score_title"
+            type="textarea"
+            label="MOD_QUIZMAKER_HIGH_SCORE_TITLE">
+          </field>
+          <field
+            name="high_score_subtitle"
+            type="editor"
+            filter="raw"
+            label="MOD_QUIZMAKER_HIGH_SCORE_SUBTITLE">
+          </field>
+          <field
+            name="excellent_score_title"
+            type="textarea"
+            label="MOD_QUIZMAKER_EXCELLENT_SCORE_TITLE">
+          </field>
+          <field
+            type="editor"
+            name="excellent_score_subtitle"
+            filter="raw"
+            label="MOD_QUIZMAKER_EXCELLENT_SCORE_SUBTITLE">
+          </field>
+        </form>
+        <form>
+          <field
+            name="user_agreement_text"
+            type="textarea"
+            required="true"
+            label="MOD_QUIZMAKER_USER_AGREEMENT_LABEL"
+            description="MOD_QUIZMAKER_USER_AGREEMENT_DESC">
+          </field>
+        </form>
         <field
           name="field-name"
           type="subform"
@@ -121,19 +131,21 @@
               type="textarea"
               label="MOD_QUIZMAKER_QUESTION_LABEL"
             />
-            <field
-              name="image"
-              type="media"
-              label="MOD_QUIZMAKER_PHOTO_LABEL"
-              description="MOD_QUIZMAKER_PHOTO_DESC"
-              accept="image/jpeg, image/png"
-            />
-            <field
-              name="image_question_alt"
-              type="textarea"
-              label="MOD_QUIZMAKER_QUESTION_IMAGE_ALT"
-              description="MOD_QUIZMAKER_IMAGE_ALT_DESCRIPTION"
-            />
+            <form>
+              <field
+                name="image"
+                type="media"
+                label="MOD_QUIZMAKER_PHOTO_LABEL"
+                description="MOD_QUIZMAKER_PHOTO_DESC"
+                accept="image/jpeg, image/png"
+              />
+              <field
+                name="image_question_alt"
+                type="textarea"
+                label="MOD_QUIZMAKER_QUESTION_IMAGE_ALT"
+                description="MOD_QUIZMAKER_IMAGE_ALT_DESCRIPTION"
+              />
+            </form>
             <field
               name="answers"
               type="subform"
@@ -143,26 +155,14 @@
               max="10"
             >
               <form>
-                <field
-                  name="answer"
-                  type="text"
-                  label="MOD_QUIZMAKER_ANSWER_LABEL"
-                />
-                <field
-                  name="correct"
-                  type="radio"
-                  default="0"
-                  label="MOD_QUIZMAKER_CORRECT_LABEL"
-                >
-                  <option value="1">JYES</option>
-                  <option value="0">JNO</option>
+                <field name="answer" type="text" label="MOD_QUIZMAKER_ANSWER_LABEL">
+                  <field name="correct" type="radio" default="0" label="MOD_QUIZMAKER_CORRECT_LABEL">
+                    <option value="1">JYES</option>
+                    <option value="0">JNO</option>
+                  </field>
+                  <field name="explanation" showon="correct:1" type="text"
+                    label="MOD_QUIZMAKER_ANSWER_EXPLANATION_LABEL"></field>
                 </field>
-                <field
-                  name="explanation"
-                  showon="correct:1"
-                  type="text"
-                  label="MOD_QUIZMAKER_ANSWER_EXPLANATION_LABEL"
-                />
               </form>
             </field>
           </form>

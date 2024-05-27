@@ -3,7 +3,7 @@
 /**
  * @package     QuizKit
  * @subpackage  mod_quizdashboard
- * @version     1.0.0
+ * @version     1.1.1
  * @author      Michelle Ermen
  * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
@@ -35,7 +35,7 @@ $limit = $jinput->get('limit', 10, 'INT');
 // Bouw de query
 $db = Factory::getDbo();
 $query = $db->getQuery(true);
-$query->select($db->quoteName(array('id', 'email', 'params', 'score', 'submission_time')))
+$query->select($db->quoteName(array('id', 'email', 'params', 'score', 'visitor_id', 'submission_time')))
   ->from($db->quoteName('#__quizkit_submissions'))
   ->setLimit($limit, $limitstart)
   ->order('submission_time DESC');

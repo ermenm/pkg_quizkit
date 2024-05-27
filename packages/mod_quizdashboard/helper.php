@@ -3,7 +3,7 @@
 /**
  * @package     QuizKit
  * @subpackage  mod_quizdashboard
- * @version     1.0.0
+ * @version     1.1.1
  * @author      Michelle Ermen
  * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
@@ -30,16 +30,16 @@ class ModQuizDashboardHelper
 
     $db = Factory::getDbo();
     $query = $db->getQuery(true);
-    $query->select($db->quoteName(array('id', 'email', 'params', 'score', 'submission_time')));
+    $query->select($db->quoteName(array('id', 'email', 'params', 'score', 'visitor_id', 'submission_time')));
     $query->from($db->quoteName('#__quizkit_submissions'));
     $db->setQuery($query);
     $results = $db->loadObjectList();
 
     $filename = 'quizkit_submissions.csv';
     $delimiter = ',';
-    $content = implode($delimiter, array('ID', 'Email', 'Score', 'Submission Time')) . "\n";
+    $content = implode($delimiter, array('ID', 'Email', 'Score', 'Visitor ID', 'Submission Time')) . "\n";
     foreach ($results as $result) {
-      $content .= implode($delimiter, array($result->id, $result->email, $result->score, $result->submission_time)) . "\n";
+      $content .= implode($delimiter, array($result->id, $result->email, $result->score, $result->visitor_id, $result->submission_time)) . "\n";
     }
 
     header('Content-Type: text/csv');
