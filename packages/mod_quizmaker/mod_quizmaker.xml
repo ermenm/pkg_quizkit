@@ -6,7 +6,7 @@
   <copyright>Copyright © 2023 MSE Digital. All Rights Reserved</copyright>
   <license>http://www.gnu.org/licenses/gpl-3.0.html GNU/GPL</license>
   <authorEmail>michelleermen.digital@gmail.com</authorEmail>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>In de QuizMaker worden de vragen en antwoorden toegevoegd. </description>
   <files>
     <filename module="mod_quizmaker">mod_quizmaker.php</filename>

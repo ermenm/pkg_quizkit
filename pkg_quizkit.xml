@@ -4,7 +4,7 @@
   <author>Michelle Ermen</author>
   <creationDate>April 2023</creationDate>
   <packagename>QuizKit</packagename>
-  <version>1.1.0</version>
+  <version>1.1.1</version>
   <description>QuizKit package</description>
   <scriptfile>script.install.php</scriptfile>
   <files folder="packages">
