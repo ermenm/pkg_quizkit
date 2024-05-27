@@ -82,7 +82,7 @@ class pkg_QuizKitInstallerScript
   {
     $db = Factory::getDBO();
 
-    // Controleer of de kolom 'params' niet al van het type TEXT is en wijzig deze indien nodig
+    // Check if 'params' column is not already TEXT and modify it if necessary
     $query = $db->getQuery(true)
       ->select('COLUMN_TYPE')
       ->from('INFORMATION_SCHEMA.COLUMNS')
