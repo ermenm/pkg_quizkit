@@ -2,7 +2,7 @@
 
 /**
  * @package     QuizKit
- * @version     1.1.0
+ * @version     1.1.1
  * @author      Michelle Ermen
  * @copyright   Copyright © 2023 MSE Digital All Rights Reserved
  * @license     GNU GPLv3 <http://www.gnu.org/licenses/gpl.html> or later; see LICENSE.txt
@@ -99,16 +99,22 @@ class pkg_QuizKitInstallerScript
       $db->execute();
     }
 
-    // Create the table if it does not exist
+    // set default to 0 on column visitor_id
+    $query = 'ALTER TABLE ' . $db->quoteName('#__quizkit_submissions') . ' MODIFY COLUMN ' . $db->quoteName('visitor_id') . ' int(11) NOT NULL DEFAULT 0';
+    $db->setQuery($query);
+    $db->execute();
+
     $query = "CREATE TABLE IF NOT EXISTS #__quizkit_submissions (
-      id int(11) NOT NULL AUTO_INCREMENT,
-      email varchar(50) NOT NULL,
-      params TEXT NOT NULL,
-      visitor_id int(11) NOT NULL DEFAULT 0,
-      score float NOT NULL,
-      submission_time datetime NOT NULL,
-      PRIMARY KEY (id)
+        id int(11) NOT NULL AUTO_INCREMENT,
+        email varchar(50) NOT NULL,
+        params TEXT NOT NULL,
+        visitor_id int(11) NOT NULL DEFAULT 0,
+        score float NOT NULL,
+        submission_time datetime NOT NULL,
+        PRIMARY KEY (id)
     )";
+
+    $db->setQuery($query);
 
     $db->setQuery($query);
     try {

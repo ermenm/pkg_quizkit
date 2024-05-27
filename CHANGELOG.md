@@ -1,5 +1,8 @@
 # Change log
 
+## v1.1.1
+- Update column visitor_id to default to 0
+
 ## v1.1.0 
 - Update column 'params' from varchar to type 'text'
 - replace 'query' function to 'execute' function
